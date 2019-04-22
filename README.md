@@ -1,13 +1,19 @@
-# rizhuti
-wordpress  theme rizhuti 日主题   
-
+# Wordpress Theme Rizhuti
+不用钱 免费用
+No money, no charge
 
 演示站点：http://url.cn/54gwBjl
 
+Demonstration：http://url.cn/54gwBjl
+
 该版本无授权机制，代码无加密，可随意二开。
+
+Not encrypted. Allow secondary development.
 
 
 版本号：V2.7 （已去除授权机制）
+
+Version：V2.7  （Crack）
 
 
 
