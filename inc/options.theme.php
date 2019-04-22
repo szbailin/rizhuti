@@ -38,13 +38,13 @@ CSF::createSection( $prefix, array(
           'attributes' => array(
             'style'    => 'width: 100%;'
           ),
-          'default'      => '日主题,rizhuti.com,rizhuti',
+          'default'      => '日主题,https://github.com/AdFate/rizhuti,rizhuti',
         ),
         array(
           'id'        => 'web_description',
           'type'      => 'textarea',
           'title'     => '网站描述',
-          'default'      => '日主题，让男人欲罢不能的WordPress主题，喜欢你就日一下',
+          'default'      => ' 喜欢就用咯，已经去除授权',
         ),
 
       ),
@@ -492,7 +492,7 @@ CSF::createSection( $prefix, array(
           'title'     => '推荐背景',
           'add_title' => '上传',
           'desc'      => '图片建议尺寸统一：'.'300*180',
-          'default'      => array('url' =>'https://rizhuti.com/wp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
+          'default'      => array('url' =>'https://https://github.com/AdFate/rizhuti/wp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
         ),
       ),
     ),
@@ -838,20 +838,7 @@ CSF::createSection( $prefix, array(
       'dependency'  => array( 'post_wechats_s', '==', 'true' ),
     ),
 
-    // array(
-    //   'id'    => 'is_share_poster',
-    //   'type'  => 'switcher',
-    //   'title' => '生成海报',
-    //   'label' => '',
-    //   'default' => false,
-    // ),
-    // array(
-    //   'id'    => 'bigger_desc',
-    //   'type'  => 'text',
-    //   'title' => '海报图片底部文字',
-    //   'default' => 'RIZHUTI 2019 右键图片另存为',
-    //   'dependency'  => array( 'is_share_poster', '==', 'true' ),
-    // ),
+
     array(
       'id'    => 'post_rewards_s',
       'type'  => 'switcher',
@@ -1879,33 +1866,16 @@ CSF::createSection( $prefix, array(
 //
 // Field: about
 //
-$rizhuti_copyright = '<li>本主题官方正版地址： <a target="_bank" href="https://rizhuti.com/">https://rizhuti.com/</a> </li>';
-$rizhuti_copyright .= '<li>日主题不反对盗版用户使用，喜欢就好，盗版用户不供任何支持。</li>';
-$rizhuti_copyright .= '<li>本类主题属于支付+资源+会员，安全问题比较重要，盗版用户自行斟酌。</li>';
-$rizhuti_copyright .= '<li>作为一款小众且实用的主题，虽然很多地方不足，但是我们有良好的会员群一起督促完善本主题。</li>';
-$rizhuti_copyright .= '<li>本主题干净极致，无需任何插件，无加密，无授权。完美适合WordPress虚拟资源分享下载站或者其他的素材资源站点</li>';
-$rizhuti_copyright .= '<li>如果你觉得确实帮到了您，您可以购买一份正版加入尊贵璀璨至尊无敌VIP 用的安全放心 日的为所欲为。</li>';
-$rizhuti_copyright .= '<li>凡不是和作者QQ200933220购买，不在日主题的会员群用户，全部为盗版！</li>';
-$rizhuti_copyright .= '<li>对作者的支持就是提供更新和发布更好作品的动力！</li>';
-$rizhuti_copyright .= '<a class="button button-primary" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=200933220&amp;site=qq&amp;menu=yes">去支持正版</a>';
+$rizhuti_copyright = '<li>GitHub Wordpress Theme Rizhuti： <a target="_bank" href="https://github.com/AdFate/rizhuti"https://github.com/AdFate/rizhuti</a> </li>';
+$rizhuti_copyright .= '<li>欢迎Star Fork 随意分发下载使用，本主题已去除授权,代码无后门.</li>';
+
+$rizhuti_copyright .= '<a class="button button-primary" target="_blank" href="https://github.com/AdFate/rizhuti">查看最新解密版</a>';
 
 CSF::createSection( $prefix, array(
   'title'       => '关于授权',
   'icon'        => 'fa fa-handshake-o',
-  'description' => '<i class="fa fa-heart" style=" color: red; "></i> 感谢您使用本主题进行创作，不管您是不是从本主题官方渠道购买的正版，但我们感谢您的支持肯定和宠爱。<i class="fa fa-heart" style=" color: red; "></i>',
+  'description' => '<i class="fa fa-heart" style=" color: red; "></i>本主题由AdFate 友情分发 解密去授权,代码无后门安心使用 | GitHub: https://github.com/AdFate/rizhuti<i class="fa fa-heart" style=" color: red; "></i>',
   'fields'      => array(
-    array(
-      'id'    => 'rizhutirizhutiid',
-      'type'  => 'text',
-      'title' => '会员ID',
-      'after' => '<p>会员购买授权中心 <a href="https://vip.ylit.cc/" target="_blank"> RI-VIP官网</a></p>',
-    ),
-    array(
-      'id'    => 'rizhutirizhuticode',
-      'type'  => 'text',
-      'title' => '授权码',
-      'after' => '<p>会员购买授权中心 <a href="https://vip.ylit.cc/" target="_blank"> RI-VIP官网</a></p>',
-    ),
     array(
       'type'       => 'notice',
       'style'      => 'success',
