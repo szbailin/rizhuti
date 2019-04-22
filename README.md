@@ -2,9 +2,11 @@
 wordpress  theme rizhuti 日主题   
 
 
-演示站点：https://networkzhijia.com/
+演示站点：https://networkzhijia.com
 
 该版本无授权机制，代码无加密，可随意二开。
+
+
 版本号：V2.7 （已去除授权机制）
 
 
