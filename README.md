@@ -7,6 +7,9 @@ Wordpress Theme Rizhuti
 No money, no charge
 
 
+转载请注明出处 谢谢!
+
+
 
 演示站点：http://url.cn/54gwBjl
 
