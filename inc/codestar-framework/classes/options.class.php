@@ -25,7 +25,7 @@ if( ! class_exists( 'CSF_Options' ) ) {
     public $args         = array(
 
       // framework title
-      'framework_title' => '日主题 RIZHUTI <small>Pro</small>',
+      'framework_title' => 'RIZHUTI V2.8<small style="color:#E53333;" >AdFate</small>',
       'framework_class' => '',
 
       // menu settings
@@ -475,7 +475,7 @@ if( ! class_exists( 'CSF_Options' ) ) {
     }
 
     public function add_admin_footer_text() {
-      $default = '感谢您使用RI-VIP进行创作分享，主题官网地址： <a href="https://rizhuti.com/" target="_blank">rizhuti.com</a>';
+      $default = '感谢您使用RI-VIP进行创作分享，主题官网地址： <a href="https://github.com/AdFate/Rizhuti" target="_blank">https://github.com/AdFate/Rizhuti</a>';
       echo ( ! empty( $this->args['footer_credit'] ) ) ? $this->args['footer_credit'] : $default;
     }
 

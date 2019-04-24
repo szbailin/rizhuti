@@ -38,13 +38,13 @@ CSF::createSection( $prefix, array(
           'attributes' => array(
             'style'    => 'width: 100%;'
           ),
-          'default'      => '日主题,https://github.com/AdFate/rizhuti,rizhuti',
+          'default'      => 'AdFate,https://github.com/AdFate/Rizhuti',
         ),
         array(
           'id'        => 'web_description',
           'type'      => 'textarea',
           'title'     => '网站描述',
-          'default'      => ' 喜欢就用咯，已经去除授权',
+          'default'      => 'AdFate 专注分析 https://github.com/AdFate',
         ),
 
       ),
@@ -64,7 +64,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'ac_qqhao',
       'type'  => 'text',
       'title' => '在线咨询QQ号码',
-      'default' => '200933220',
+      'default' => '10086',
     ),
     array(
       'id'        => 'post_default_thumb',
@@ -424,7 +424,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'banner_title',
       'type'  => 'text',
       'title' => '搜索大标题',
-      'default' => '日主题RiTheme，搜索从这里开始',
+      'default' => '搜索从这里开始',
     ),
 
     array(
@@ -492,7 +492,7 @@ CSF::createSection( $prefix, array(
           'title'     => '推荐背景',
           'add_title' => '上传',
           'desc'      => '图片建议尺寸统一：'.'300*180',
-          'default'      => array('url' =>'https://https://github.com/AdFate/rizhuti/wp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
+          'default'      => array('url' =>'https://github.com/AdFate/Rizhutiwp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
         ),
       ),
     ),
@@ -605,7 +605,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'about_title',
       'type'  => 'text',
       'title' => '模块标题',
-      'default' => '关于日主题 ABOUT',
+      'default' => '关于ABOUT',
     ),
     array(
       'id'    => 'about_desc',
@@ -838,7 +838,20 @@ CSF::createSection( $prefix, array(
       'dependency'  => array( 'post_wechats_s', '==', 'true' ),
     ),
 
-
+    // array(
+    //   'id'    => 'is_share_poster',
+    //   'type'  => 'switcher',
+    //   'title' => '生成海报',
+    //   'label' => '',
+    //   'default' => false,
+    // ),
+    // array(
+    //   'id'    => 'bigger_desc',
+    //   'type'  => 'text',
+    //   'title' => '海报图片底部文字',
+    //   'default' => 'RIZHUTI 2019 右键图片另存为',
+    //   'dependency'  => array( 'is_share_poster', '==', 'true' ),
+    // ),
     array(
       'id'    => 'post_rewards_s',
       'type'  => 'switcher',
@@ -1074,13 +1087,13 @@ CSF::createSection( $prefix, array(
       'label'       => '用户付款成功，订单消息将发送到用户邮箱，需要自行在辅助功能设置好（SMTP服务），免登录用户暂无法接收',
       'default'      => false,
     ),
-    array(
-      'id'         => 'is_down_rasmd5',
-      'type'       => 'switcher',
-      'title'      => '下载地址简单加密',
-      'label'       => '简单加密也可防采集跳转，如有地址乱码等，可以开启此功能',
-      'default'      => false,
-    ),
+    // array(
+    //   'id'         => 'is_down_rasmd5',
+    //   'type'       => 'switcher',
+    //   'title'      => '下载地址简单加密',
+    //   'label'       => '简单加密也可防采集跳转，如有地址乱码等，可以开启此功能',
+    //   'default'      => false,
+    // ),
     //
     // Dependency example 1
     array(
@@ -1132,7 +1145,7 @@ CSF::createSection( $prefix, array(
             array(
               'id'    => 'vip_price_31_downum',
               'type'  => 'text',
-              'title' => '下载次数',
+              'title' => '每日下载次数',
               'default' => '5',
             ),
           )
@@ -1866,11 +1879,10 @@ CSF::createSection( $prefix, array(
 //
 // Field: about
 //
+
 $rizhuti_copyright = '<li>GitHub Wordpress Theme Rizhuti： <a target="_bank" href="https://github.com/AdFate/rizhuti"https://github.com/AdFate/rizhuti</a> </li>';
 $rizhuti_copyright .= '<li>欢迎Star Fork 随意分发下载使用，本主题已去除授权,代码无后门.</li>';
-
 $rizhuti_copyright .= '<a class="button button-primary" target="_blank" href="https://github.com/AdFate/rizhuti">查看最新解密版</a>';
-
 CSF::createSection( $prefix, array(
   'title'       => '关于授权',
   'icon'        => 'fa fa-handshake-o',

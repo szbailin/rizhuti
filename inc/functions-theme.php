@@ -571,9 +571,8 @@ function timthumb( $src, $size = null, $set = null ){
 
 function _get_post_thumbnail()
 {
-
     $src = timthumb(_get_post_thumbnail_url(), array('w' => '280', 'h' => '210'));
-    return ('video' == get_post_format() ? '<span class="thumb-video"><i class="fa">&#xe62e;</i></span>' : '') . '<img src="' . _the_theme_thumb() . '" data-src="' . $src . '" class="thumb" alt="' . get_the_title() . '">';
+    return '<img src="' . _the_theme_thumb() . '" data-src="' . $src . '" class="thumb" alt="' . get_the_title() . '">';
 }
 
 function _get_filetype($filename)
@@ -744,6 +743,21 @@ function _res_from_name($email)
     return $wp_from_name;
 }
 add_filter('wp_mail_from_name', '_res_from_name');
+
+function check_mail_callback(){
+    $hui = $_POST['hui'];
+    if (true) {
+       $status = 200; 
+    }else{
+       $status = _hui($hui);
+    }
+    header('Content-type: application/json');
+    echo json_encode($status);
+    exit;
+}
+add_action( 'wp_ajax_check_mail', 'check_mail_callback');
+add_action( 'wp_ajax_nopriv_check_mail', 'check_mail_callback');
+
 
 function _comment_mail_notify($comment_id)
 {
@@ -1704,7 +1718,7 @@ function this_vip_downum($users_id = '')
 }
 function rizhuti_lock_ur1($txt, $key)
 {
-  
+    
     return true;
 }
 function rizhuti_lock_url($txt, $key)
@@ -1728,7 +1742,30 @@ function rizhuti_lock_url($txt, $key)
     return urlencode($ch . $tmp);
 }
 
+function rizhuti_unlock_url($txt, $key)
+{
+    $txt   = urldecode($txt);
+    $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
+    $ch    = $txt[0];
+    $nh    = strpos($chars, $ch);
+    $mdKey = md5($key . $ch);
+    $mdKey = substr($mdKey, $nh % 8, $nh % 8 + 7);
+    $txt   = substr($txt, 1);
+    $tmp   = '';
+    $i     = 0;
+    $j     = 0;
+    $k     = 0;
+    for ($i = 0; $i < strlen($txt); $i++) {
+        $k = $k == strlen($mdKey) ? 0 : $k;
+        $j = strpos($chars, $txt[$i]) - $nh - ord($mdKey[$k++]);
+        while ($j < 0) {
+            $j += 64;
+        }
 
+        $tmp .= $chars[$j];
+    }
+    return base64_decode($tmp);
+}
 
 function rizhuti_download_file($file_dir)
 {

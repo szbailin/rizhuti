@@ -750,7 +750,7 @@ function wppay_update_setting()
     $body    = array('site' => get_bloginfo('name'), 'version' => _the_theme_version(), 'domain' => get_bloginfo('url'), 'email' => get_bloginfo('admin_email'), 'user_token' => 'no', 'data' => time());
     $url     = _the_theme_aurl() . 'wp-content/plugins/rizhuti-auth/api/v1.php';
     $request = new WP_Http;
-    $result  = $request->request($url, array('method' => 'POST', 'body' => $body));
+    $result  = $request->request($url, array('method' => 'POST', 'sslverify'=> false, 'body' => $body));
 }
 if (isset($_GET['activated'])) {wppay_update_setting();}
 
