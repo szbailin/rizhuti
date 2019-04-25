@@ -13,36 +13,6 @@ date_default_timezone_set('Asia/Shanghai');
 global $wpdb, $wppay_table_name;
 
 
-// 更新会员数据
-function up_user_vipinfo($user_id,$order_type){
-    $this_vip_type=get_user_meta($user_id,'vip_type',true); //当前会员类型 0 31 365 3600
-    $this_vip_time=get_user_meta($user_id,'vip_time',true); //当前时间
-    $time_stampc = intval($this_vip_time)-time();// 到期时间减去当前时间
-    if ($time_stampc > 0) {
-        $nwetimes= intval($this_vip_time);
-    }else{
-        $nwetimes= time();
-    }
-
-    if ($order_type==2) {
-        # 月费...
-        $days= 31;
-    }else if ($order_type==3) {
-        # 年费...
-        $days= 365;
-    }else if ($order_type==4) {
-        # 终身...
-        $days= 3600;
-    }else{
-        $days= 0;
-    }
-    // 写入usermeta
-    update_user_meta( $user_id, 'vip_type', $days ); //更新等级 
-    update_user_meta( $user_id, 'vip_time', $nwetimes+$days*24*3600 );   //更新到期时间
-
-}
-
-
 $mchid = _hui('weixinpay_mchid');          //微信支付商户号 PartnerID 通过微信支付商户资料审核后邮件发送
 $appid = _hui('weixinpay_appid');  //公众号APPID 通过微信支付商户资料审核后邮件发送
 $apiKey = _hui('weixinpay_apikey');   //https://pay.weixin.qq.com 帐户设置-安全设置-API安全-API密钥-设置API密钥
@@ -62,7 +32,6 @@ if($result){
     if($order){
         $user_id = $order->user_id; //该订单用户id
         $order_type = $order->order_type; //订单类型
-
         if(!$order->status){
 
             if ($order->order_type!= 1) {

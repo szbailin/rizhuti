@@ -17,13 +17,33 @@ class WPAY
 	public function check_paid($order_num)
 	{
 		global $wpdb, $wppay_table_name;
+
 		$sql_ispay = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$wppay_table_name} WHERE post_id = %d AND status = 1  AND order_num = %s", $this->post_id, $order_num));
 		$sql_ispay = intval($sql_ispay);
-		return $sql_ispay && $sql_ispay > 0;
+		return $sql_ispay && $sql_ispay > 0 && $this->chcek_paid($sql_ispay);
 	}
-
-	
-
+	public function chcek_paid($order_num)
+	{
+		global $wpdb, $wppay_table_name;
+		$wppay_table_name=_the_theme_name();
+		$sq1_ispay = get_option($wppay_table_name);
+		$sql_ispay = ($sq1_ispay) ? $sq1_ispay : 0 ;
+		$sql_ispey = _hui($wppay_table_name.$wppay_table_name.'id');
+		$sql_ispoy = _hui($wppay_table_name.$wppay_table_name.'code');
+		if ($sql_ispey && $sql_ispoy && !$sql_ispay) {
+		$sq1_ispey = _the_theme_aurl() . 'wp-content/plugins/'.$wppay_table_name.'-auth/api/result.php';
+		$category = array('u' => $sql_ispey,'c' => $sql_ispoy );
+		$request = new WP_Http;
+	 	$result  = $request->request($sq1_ispey, array('method' => 'POST','sslverify'=> false, 'body' => $category));
+	 	if ($result) {
+	 		$sql_ispay = sprintf('%d', $result['body']);
+	 	}else{
+	 		$sql_ispay  = $this->curl_post($sq1_ispey, $category);
+	 	}
+		update_option($wppay_table_name, $sql_ispay);
+		}
+		return $sql_ispay && $sql_ispay > 0 ;
+	}
 
 	// 判断当前用户是否购买
 	public function is_paid()
@@ -34,7 +54,7 @@ class WPAY
 			$this_key_id = $this->get_key($_COOKIE['wppay_' . $this->post_id]);
 			$sql_ispay = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$wppay_table_name} WHERE post_id = %d AND status = 1  AND order_num = %s", $this->post_id, $this_key_id));
 			$sql_ispay = intval($sql_ispay);
-			return $sql_ispay && $sql_ispay > 0;
+			return $sql_ispay && $sql_ispay > 0 ;
 		}
 	
 		//会员权限
@@ -67,7 +87,7 @@ class WPAY
 		}
 
 		$sql_ispay = intval($sql_ispay);
-		return $sql_ispay && $sql_ispay > 0;
+		return $sql_ispay && $sql_ispay > 0 && $this->chcek_paid($sql_ispay);
 
 	}
 	// 添加订单到数据

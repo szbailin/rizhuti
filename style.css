@@ -1,10 +1,10 @@
 /*! 
  * Theme Name: rizhuti
- * Theme URI: https://rizhuti.com/
- * Description:2.6.0 全新架构，拖拽模具，强大的选项框架，下载地址加密等,弹窗登录注册！优化很多细节，式极致快简，免登录付费，无插件，集成会员系统，邮件订单通知，即将发布如少女般纯洁！
- * Author: ylit
- * Author URI: https://rizhuti.com/
- * Version: 2.6
+ * Theme URI: https://github.com/AdFate/Rizhuti
+ * Description:2.8.0 无限下载地址，无限自定义字段，式极致快简，免登录付费，无插件，集成会员系统，邮件订单通知，即将发布如少女般纯洁！
+ * Author: AdFate
+ * Author URI: https://github.com/AdFate/Rizhuti
+ * Version: 2.8
  */
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
 body{margin:0}
@@ -45,7 +45,7 @@ button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}
 button{overflow:visible}
 button,select{text-transform:none}
 button,html input[type=button],input[type=submit],input[type=reset]{cursor:pointer;-webkit-appearance:button}
-button[disabled],html input[disabled]{cursor:default}
+button[disabled],html input[disabled]{cursor: no-drop;}
 button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}
 input{line-height:normal}
 input[type=checkbox],input[type=radio]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0}
@@ -497,7 +497,7 @@ body{-webkit-transition-duration:.3s;transition-duration:.3s}
 li.cat-item{display:inline-block;margin:0;padding:0;list-style:none}
 li.current-cat-parent{display:inline-block;margin:0;padding:0;list-style:none}
 .filter-catnav .current-cat,.filter-catnav .current-cat a{color:#1890ff}
-.filters .filter-item span{margin-right:10px}
+.filters .filter-item span{margin-right:10px;padding: 4px 8px;background-color: #f6f6f6;border-radius: 4px;}
 .filters .filter-item a{display:inline-block;margin-top:10px;margin-right:10px}
 .filters .filter-item>.on{color:#1890ff}
 @media (max-width:544px){.filters{margin-top:0;padding:20px 0;width:100%;background-color:#f6f6f6}

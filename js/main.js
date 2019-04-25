@@ -74,12 +74,12 @@ $(document).ready(function(){
 	}
 
 	 // CONET download_popup A
-    $("#download-popup").on("click",function(){
+    $(".download-popup").on("click",function(){
         var url = $(this).attr('data-url');
         var info = $(this).attr('data-info');
         if (!info) {info='无需密码'}
         popup.showCustomModal({
-            template: "Download",  // AlipayQrcode; WeixinpayQrcode ;Popup；PayMethod
+            template: "Download",  
             layerClose: 1,
             data: {
 		        url: url,

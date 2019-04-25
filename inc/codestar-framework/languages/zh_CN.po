@@ -652,7 +652,7 @@ msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid "http://codestarframework.com/"
-msgstr "https://rizhuti.com/"
+msgstr "https://github.com/AdFate/Rizhuti"
 
 #. Description of the plugin/theme
 msgid ""
@@ -665,4 +665,4 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://codestarthemes.com/"
-msgstr "https://rizhuti.com/"
+msgstr "https://github.com/AdFate/Rizhuti"

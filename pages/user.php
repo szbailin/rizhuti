@@ -47,7 +47,7 @@ $user_downData = this_vip_downum();
 			<li><a href="?action=comment" class="comments <?php if($_GET['action'] == 'comment') echo 'active';?>" etap="comment">我的评论</a></li>
 			<?php if (_hui('is_write')) { ?>
 			<li><a href="?action=mywrite" class="mywrite <?php if($_GET['action'] == 'mywrite') echo 'active';?>" etap="mywrite">我的文章</a></li>
-			<li><a href="?action=write" class="write <?php if($_GET['action'] == 'write') echo 'active';?>" etap="write">投稿</a></li>
+			<li><a href="?action=write" class="write <?php if($_GET['action'] == 'write') echo 'active';?>" etap="write">我要投稿</a></li>
 			<?php } ?>
 			<li><a href="?action=password" class="password <?php if($_GET['action'] == 'password') echo 'active';?>" etap="password">修改密码</a></li>
 		</ul>

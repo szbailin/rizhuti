@@ -7,7 +7,16 @@ if(!is_user_logged_in())
 }
 date_default_timezone_set('Asia/Shanghai');
 global $wpdb, $wppay_table_name;
+?>
 
+<script type="text/javascript">
+　　window.location.href="<?php echo admin_url('/users.php'); ?>";
+</script>
+
+
+<?php
+
+exit();
 $action=isset($_GET['action']) ?$_GET['action'] :false;
 $id=isset($_GET['id']) && is_numeric($_GET['id']) ?intval($_GET['id']) :0;
 // 保存
@@ -116,101 +125,5 @@ if($id && current_user_can('administrator'))
 	exit;
 }
 
-// userlist
-$total   = $wpdb->get_var("SELECT COUNT(id) FROM $wpdb->users WHERE user_status =0 ");
-$perpage = 20;
-$pages = ceil($total / $perpage);
-$page=isset($_GET['paged']) ?intval($_GET['paged']) :1;
-$offset = $perpage*($page-1);
-$UserList = $wpdb->get_results("SELECT * FROM $wpdb->users WHERE user_status =0 ORDER BY ID DESC limit $offset,$perpage");
-
-
 ?>
 
-<!-- 默认显示页面 -->
-<div class="wrap">
-	<h2>所有会员</h2>
-	<div class="tablenav top">
-	    <p class="search-box">
-	<label class="screen-reader-text" for="post-search-input">搜索 :</label>
-	<input type="search" id="post-search-input" name="s" value="">
-	<input type="submit" id="search-submit" class="button" value="搜索"></p>
-
-	    <div class="alignleft actions">
-	        <label class="screen-reader-text" for="filter-by-date">
-	            按日期筛选
-	        </label>
-	        <select id="filter-by-date" name="m">
-	            <option selected="selected" value="0">
-	                全部日期
-	            </option>
-	        </select>
-	        <label class="screen-reader-text" for="status">
-	            按订单状态过滤
-	        </label>
-	        <select class="postform" id="status" name="status">
-	            <option selected="selected" value="0">
-	                普通会员
-	            </option>
-	            <option class="level-0" value="1">
-	                包月会员
-	            </option>
-	            <option class="level-0" value="2">
-	                包年会员
-	            </option>
-	            <option class="level-0" value="3">
-	                终身会员
-	            </option>
-	        </select>
-	        <input class="button" id="post-query-submit" name="filter_action" type="submit" value="筛选">
-	        </input>
-	    </div>
-	    <div class="tablenav-pages one-page">
-	        <span class="displaying-num">
-	            共<?php echo $total ?>个订单 
-	        </span>
-	    </div>
-	    <br class="clear">
-	    </br>
-	</div>
-
-	<table class="wp-list-table widefat fixed striped posts">
-		<thead>
-			<tr>
-				<th>用户ID</th>
-				<th>会员邮箱</th>	
-				<th>会员昵称</th>
-				<th>会员类型</th>
-				<th>VIP到期时间</th>
-				<th>注册日期</th>
-				<th>操作/详情</th>
-			</tr>
-		</thead>
-		<tbody>
-	<?php
-		if($UserList) {
-			foreach($UserList as $value){
-				echo "<tr>";
-				echo "<td>".$value->user_login."</td>";
-				echo "<td>".$value->user_email."</td>";
-				echo "<td>".$value->display_name."</td>";
-				echo "<td>".vip_type_name($value->ID)."</td>";
-				echo '<td>'.vip_time($value->ID).'</td>';
-				echo "<td>".$value->user_registered."</td>";
-				echo '<td><a href="'.admin_url('admin.php?page=wppay_vip_page&id='.$value->ID).'">操作/详情</a></td>';
-				echo "</tr>";
-			}
-		}
-		else{
-			echo '<tr><td colspan="6" align="center"><strong>没有订单</strong></td></tr>';
-		}
-	?>
-	</tbody>
-	</table>
-    <?php echo c_admin_pagenavi($total,$perpage);?>
-    <script>
-            jQuery(document).ready(function($){
-
-            });
-	</script>
-</div>

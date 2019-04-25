@@ -8,35 +8,6 @@ require_once("alipay.config.php");
 global $wpdb, $wppay_table_name;
 
 
-// 更新会员数据
-function up_user_vipinfo($user_id,$order_type){
-    $this_vip_type=get_user_meta($user_id,'vip_type',true); //当前会员类型 0 31 365 3600
-    $this_vip_time=get_user_meta($user_id,'vip_time',true); //当前时间
-    $time_stampc = intval($this_vip_time)-time();// 到期时间减去当前时间
-    if ($time_stampc > 0) {
-        $nwetimes= intval($this_vip_time);
-    }else{
-        $nwetimes= time();
-    }
-
-    if ($order_type==2) {
-        # 月费...
-        $days= 31;
-    }else if ($order_type==3) {
-        # 年费...
-        $days= 365;
-    }else if ($order_type==4) {
-        # 终身...
-        $days= 3600;
-    }else{
-        $days= 0;
-    }
-    // 写入usermeta
-    update_user_meta( $user_id, 'vip_type', $days ); //更新等级 
-    update_user_meta( $user_id, 'vip_time', $nwetimes+$days*24*3600 );   //更新到期时间
-
-}
-
 
 //支付宝公钥，账户中心->密钥管理->开放平台密钥，找到添加了支付功能的应用，根据你的加密类型，查看支付宝公钥
 $alipayPublicKey=_hui('alipay_publickey');
@@ -52,15 +23,8 @@ if (!isset($_POST['sign_type'])) {
 $result = $aliPay->rsaCheck($_POST,$_POST['sign_type']);
 
 
-wpay_debug_log($_POST['trade_status'].'...');
-
-wpay_debug_log($_POST['sign_type'].'...');
-
-wpay_debug_log($_POST['$result'].'..check签名.');
-
 
 if($result===true){
-wpay_debug_log($_POST['$result'].'..通过签名.');
     if ($_POST['trade_status'] == 'WAIT_BUYER_PAY') {
         // 该状态表示订单已经生成，用户没有付款
         //wpay_debug_log('订单号：'.$_POST['out_trade_no'].'正在扫码...');
@@ -79,7 +43,6 @@ wpay_debug_log($_POST['$result'].'..通过签名.');
         if($order){
             $user_id = $order->user_id; //该订单用户id
             $order_type = $order->order_type; //订单类型
-
             if(!$order->status){
 
                 if ($order->order_type!=1) {

@@ -17,7 +17,7 @@ if( ! class_exists( 'CSF_Field_date' ) ) {
     public function render() {
 
       $default_settings = array(
-        'dateFormat' => 'mm/dd/yy',
+        'dateFormat' => 'yy/mm/dd',
       );
 
       $settings = ( ! empty( $this->field['settings'] ) ) ? $this->field['settings'] : array();

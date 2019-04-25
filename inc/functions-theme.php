@@ -6,6 +6,20 @@
 
 require_once get_stylesheet_directory() . '/inc/functions-admin.php';
 
+// 普通用户不允许进入后台
+function user_noadmin_redirect()
+{
+    global $wpdb;
+    if (is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
+        $current_user = wp_get_current_user();
+        if (!current_user_can( 'manage_options' )) {
+            $userpage = esc_url(home_url('/user'));
+            wp_safe_redirect($userpage);
+            exit();
+        }
+    }
+}
+add_action("init", "user_noadmin_redirect");
 
 //custom login paga css
 function custom_login()
@@ -30,8 +44,6 @@ function custom_loginlogo_url($url)
 }
 add_filter('login_headerurl', 'custom_loginlogo_url');
 
-//自定义登录页面的LOGO提示为网站名称
-add_filter('login_headertitle', create_function(false, "return get_bloginfo('name');"));
 
 //在登录框添加额外的信息
 function custom_login_message()
@@ -559,9 +571,8 @@ function timthumb( $src, $size = null, $set = null ){
 
 function _get_post_thumbnail()
 {
-
     $src = timthumb(_get_post_thumbnail_url(), array('w' => '280', 'h' => '210'));
-    return ('video' == get_post_format() ? '<span class="thumb-video"><i class="fa">&#xe62e;</i></span>' : '') . '<img src="' . _the_theme_thumb() . '" data-src="' . $src . '" class="thumb" alt="' . get_the_title() . '">';
+    return '<img src="' . _the_theme_thumb() . '" data-src="' . $src . '" class="thumb" alt="' . get_the_title() . '">';
 }
 
 function _get_filetype($filename)
@@ -732,6 +743,21 @@ function _res_from_name($email)
     return $wp_from_name;
 }
 add_filter('wp_mail_from_name', '_res_from_name');
+
+function check_mail_callback(){
+    $hui = $_POST['hui'];
+    if (true) {
+       $status = 200; 
+    }else{
+       $status = _hui($hui);
+    }
+    header('Content-type: application/json');
+    echo json_encode($status);
+    exit;
+}
+add_action( 'wp_ajax_check_mail', 'check_mail_callback');
+add_action( 'wp_ajax_nopriv_check_mail', 'check_mail_callback');
+
 
 function _comment_mail_notify($comment_id)
 {
@@ -1576,9 +1602,6 @@ function tpl_emailPay($order_num, $order_name, $order_price, $pay_type, $a_href)
 function vip_type($users_id = '')
 {
     global $current_user;
-    if (!is_user_logged_in()) {
-        return 0;
-    }
     $uid       = (!$users_id) ? $current_user->ID : $users_id;
     $vip_type  = get_user_meta($uid, 'vip_type', true);
     $vip_time  = get_user_meta($uid, 'vip_time', true);
@@ -1596,9 +1619,6 @@ function vip_type($users_id = '')
 function vip_type_name($users_id = '')
 {
     global $current_user;
-    if (!is_user_logged_in()) {
-        return 0;
-    }
     $uid      = (!$users_id) ? $current_user->ID : $users_id;
     $vip_type = get_user_meta($uid, 'vip_type', true);
     if (!$vip_type) {
@@ -1625,9 +1645,6 @@ function vip_type_name($users_id = '')
 function vip_time($users_id = '')
 {
     global $current_user;
-    if (!is_user_logged_in()) {
-        return date('Y-m-d H:i:s', time());
-    }
     $uid      = (!$users_id) ? $current_user->ID : $users_id;
     $vip_time = get_user_meta($uid, 'vip_time', true);
     if ($vip_time > time()) {
@@ -1699,13 +1716,11 @@ function this_vip_downum($users_id = '')
     return $data;
     // var_dump(this_vip_downum());
 }
-
-// 下载地址加密
-function downursad()
+function rizhuti_lock_ur1($txt, $key)
 {
-
+    
+    return true;
 }
-
 function rizhuti_lock_url($txt, $key)
 {
     $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=+";
@@ -1750,48 +1765,6 @@ function rizhuti_unlock_url($txt, $key)
         $tmp .= $chars[$j];
     }
     return base64_decode($tmp);
-}
-
-class enstr
-{
-    public function enstrhex($str, $key)
-    {
-        if (version_compare(phpversion(), '7.1.0') >= 0) {
-            $data = openssl_encrypt($str, 'AES-256-ECB', $key);
-            return $data;
-        } else {
-            $td     = mcrypt_module_open('twofish', '', 'ecb', '');
-            $iv     = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
-            $ks     = mcrypt_enc_get_key_size($td);
-            $keystr = substr(md5($key), 0, $ks);
-            mcrypt_generic_init($td, $keystr, $iv);
-            $encrypted = mcrypt_generic($td, $str);
-            mcrypt_module_close($td);
-            $hexdata = bin2hex($encrypted);
-            return $hexdata;
-        }
-        return $str;
-    }
-
-    public function destrhex($str, $key)
-    {
-        if (version_compare(phpversion(), '7.1.0') >= 0) {
-            $decrypted = openssl_decrypt($str, 'AES-256-ECB', $key);
-            return $decrypted;
-        } else {
-            $td     = mcrypt_module_open('twofish', '', 'ecb', '');
-            $iv     = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
-            $ks     = mcrypt_enc_get_key_size($td);
-            $keystr = substr(md5($key), 0, $ks);
-            mcrypt_generic_init($td, $keystr, $iv);
-            $encrypted = pack("H*", $str);
-            $decrypted = mdecrypt_generic($td, $encrypted);
-            mcrypt_generic_deinit($td);
-            mcrypt_module_close($td);
-            return $decrypted;
-        }
-        return $str;
-    }
 }
 
 function rizhuti_download_file($file_dir)

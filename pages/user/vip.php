@@ -31,7 +31,7 @@ global $current_user;
 				</div>
               
               	<div class="vip-item">
-					<button class="btn btn-primary" href="javascript:;" id="pay-vip"><?php echo $payBtnName = (vip_type() > 0) ? '续费升级' : '立即开通' ; ?></button>
+					<button class="btn btn-primary" href="javascript:;" id="pay-vip">立即开通</button>
 					<p style="margin-top: 1.8rem;color: #c5c5c5;">开通的等级大于当前等级，到期日期会自动延长</p>
 				</div>
 				<div class="vip-item">
@@ -78,9 +78,37 @@ global $current_user;
 					</div>
 				</div>
 			<script>
+			<?php
+				if (vip_type() == 0) {$this_types = 0;
+				} elseif(vip_type() == 31) {$this_types = 2;
+				}elseif(vip_type() == 365) {$this_types = 3;
+				}elseif(vip_type() == 3600) {$this_types = 4;}
+			?>
+			var this_types = "<?php echo $this_types ?>"; 
+			$("label.radio-box").on("click", function() {
+				var type = $("input[name='order_type']:checked").val();
+				var cbtn = $("button.btn-primary");
+				var type = $("input[name='order_type']:checked").val();
+				cbtn.removeAttr("disabled");
+				if (this_types==0) {
+					cbtn.text('立即开通');
+				}else if(this_types==4){
+					cbtn.text('等级已达到最高');
+					cbtn.attr("disabled","true");
+				}else if(type == this_types){
+					cbtn.text('立即续费');
+				}else if(type > this_types){
+					cbtn.text('立即升级');
+				}else if(type < this_types){
+					cbtn.text('续费1个月年费会员');
+				}else{
+					cbtn.text('立即开通');
+					
+				}
+			});
 			$("#R_faqList .item").on("click", function() {
-			         $(this).toggleClass("active").siblings().removeClass("active")
-			    });
+			     $(this).toggleClass("active").siblings().removeClass("active")
+			});
 			</script>
           
 		</div>

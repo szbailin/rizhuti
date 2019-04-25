@@ -52,7 +52,7 @@ $footer_moble_is = (_hui('footer_moble_is')) ? 'cs-moble-false' : 'cs-moble-true
                     <div class="copy-text">
                     &copy; <?php echo date('Y'); ?> <a href="<?php bloginfo('url'); ?>"><?php bloginfo('name'); ?></a> &nbsp; 
 					    <?php echo get_option('zh_cn_l10n_icp_num') ? get_option('zh_cn_l10n_icp_num').' &nbsp; ' : ''; ?>
-					    <?php echo $retVal = (_hui('footer_by_info')) ? '<a href="https://rizhuti.com/" target="_blank">theme by rizhuti </a>' : '' ; ?>
+					    <?php echo $retVal = (_hui('footer_by_info')) ? '<a href="https://github.com/AdFate/Rizhuti" target="_blank">theme by rizhuti </a>' : '' ; ?>
                       	&nbsp;本次查询请求：<?php echo get_num_queries();?>
                         &nbsp;页面生成耗时： <?php echo timer_stop(0,5);?>
 					</div>

@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header();$cat_ID = get_query_var('cat'); ?>
 
 <?php _the_focusbox( '', single_cat_title('', false) ); ?>
 
@@ -6,35 +6,45 @@
 	<?php if (_hui('is_filters_cat') == 1) { ?>
 		<div class="filters">
 			<?php if (_hui('filters_cat_is')) { ?>
-			<div class="filter-item">
-			 	<span>所有分类：</span>
-			 	<ul class="filter-catnav">
-				<?php
 
-				$variable = wp_list_categories( array(
-				    'echo' => false,
-				    'show_count' => false,
-				    'title_li' => '',
-				    'hide_empty'           => 0,
-				    'child_of'            => 0,
-				) );
-				echo $variable;
-				?>
-				</ul>
-			</div>
+				<div class="filter-item">
+				 	<span>所有分类：</span>
+				 	<ul class="filter-catnav">
+					<?php
+						$category = get_term_by('id',$cat_ID,'category');
+						$cat_childs = get_categories("parent=".$category->term_id."&hide_empty=0&depth=1"); 
+						$parent_id = $category->parent; 
+						$variable = wp_list_categories(array('echo' => false, 'show_count' => false, 'title_li' => '', 'hide_empty' => 0, 'child_of' => 0, 'depth' => 1));
+						echo $variable;
+					?>
+					</ul>
+				</div>
+				<?php if ($cat_childs || $parent_id) { ?>
+					<div class="filter-item">
+					 	<span>二级分类：</span>
+					 	<ul class="filter-catnav">
+						<?php
+							$parentcat_ID = ($parent_id) ? $parent_id : $cat_ID ;
+							$variable = wp_list_categories(array('echo' => false, 'show_count' => false, 'title_li' => '', 'hide_empty' => 0, 'child_of' => $parentcat_ID, 'depth' => 1));
+							echo $variable;
+						?>
+						</ul>
+					</div>
+				<?php } ?>
+
 			<?php } ?>
 			<?php if (_hui('is_filters_tag_is')) { ?>
 			<div class="filter-item">
 			 	<span>推荐标签：</span>
 				<?php
-					$this_cat_arg = array( 'categories' => $cat);
+					$this_cat_arg = array( 'categories' => $cat_ID);
 					$tags = _get_category_tags($this_cat_arg);
 					$content = '<ul class="filter-tag">';
 					if(!empty($tags)) {
 					  foreach ($tags as $tag) {
 					    $content .= '<li><a href="'.get_tag_link($tag->term_id).'">'.$tag->name.'</a></li>';
 					  }
-					}else{$content .= '<li>暂无相关标签</li>';}
+					}else{$content .= '<li><a href="#">暂无相关标签</a></li>';}
 					$content .= "</ul>";
 					echo $content;
 				?>
@@ -81,7 +91,7 @@
 
 			$args = array(
 			 'order' => 'DESC',
-			 'cat'      => $cat,
+			 'cat'      => $cat_ID,
 			 'ignore_sticky_posts' => 1,
 			 'meta_query' => $metaArray,
 			 'paged' => $paged

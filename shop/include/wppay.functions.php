@@ -5,13 +5,10 @@ add_action('admin_menu', 'wppay_menu');
 function wppay_menu() {
 	add_menu_page('WPPAY', '商城', 'activate_plugins', 'wppay_orders_page', 'wppay_orders_page','dashicons-shield');
 	add_submenu_page('wppay_orders_page', '订单', '订单', 'activate_plugins', 'wppay_orders_page','wppay_orders_page');
+	// add_submenu_page('wppay_orders_page', '清理失效订单', '清理失效订单', 'activate_plugins', 'wppay_remo_orders_page','wppay_remo_orders_page');
 	add_submenu_page('wppay_orders_page', '会员', '会员', 'activate_plugins', 'wppay_vip_page','wppay_vip_page');
-	add_action( 'admin_init', 'wppay_setting_group');
+	// add_submenu_page('wppay_orders_page', '后台添加会员', '后台添加会员', 'activate_plugins', 'wppay_up_vip_page','wppay_up_vip_page');
 }
-
-function wppay_setting_group() {
-	register_setting( 'wppay_setting_group', 'wppay_setting' );
-}	
 
 
 // 插件订单页面
@@ -19,16 +16,54 @@ function wppay_orders_page(){
     @include WPAY_PATH.'/admin/orders.php';
 }
 
+// 清理无效订单
+function wppay_remo_orders_page(){
+   @include WPAY_PATH.'/admin/remo-orders.php';
+}
+
+
 // 插件会员页面
 function wppay_vip_page(){
     @include WPAY_PATH.'/admin/vip.php';
 }
 
-// 卸载删除数据表
-function wppay_uninstall(){
-	global $wpdb, $wppay_table_name;
-	$wpdb->query("DROP TABLE IF EXISTS {$wppay_table_name}");
+// 后台赠送会员页面
+function wppay_up_vip_page(){
+   @include WPAY_PATH.'/admin/up-vip.php';
 }
+
+
+// 更新会员数据
+function up_user_vipinfo($user_id,$order_type){
+    $this_vip_type=vip_type($user_id); //当前会员类型 0 31 365 3600
+    $this_vip_time=get_user_meta($user_id,'vip_time',true); //当前时间
+    $time_stampc = intval($this_vip_time)-time();// 到期时间减去当前时间
+    
+    if ($order_type==2) {
+        # 月费...
+        $days= 31;
+    }else if ($order_type==3) {
+        # 年费...
+        $days= 365;
+    }else if ($order_type==4) {
+        # 终身...
+        $days= 3600;
+    }else{
+        $days= 0;
+    }
+  	if ($time_stampc > 0) {
+        $nwetimes= intval($this_vip_time);
+    }else{
+        $nwetimes= time();
+    }
+    // 写入usermeta
+    $new_vip_type = ($this_vip_type<$days) ? $days : $this_vip_type ;
+    update_user_meta( $user_id, 'vip_type', $new_vip_type ); //更新等级 
+    update_user_meta( $user_id, 'vip_time', $nwetimes+$days*24*3600 );   //更新到期时间
+}
+
+
+
 
 // QRcode
 function getQrcode($url){
@@ -702,27 +737,6 @@ function wppay_shortcode($atts, $content){
 }  
 
 
-function wppay_get_setting($key=NULL){
-	$setting = get_option('wppay_setting');
-	return $key ? $setting[$key] : $setting;
-}
-
-function wppay_delete_setting(){
-	delete_option('wppay_setting');
-}
-
-function wppay_setting_key($key){
-	if( $key ){
-		return "wppay_setting[$key]";
-	}
-
-	return false;
-}
-
-function wppay_update_setting($setting){
-	update_option('wppay_setting', $setting);
-}	
-
 function wppay_css_url($css_url){
 	return WPAY_URL . "/static/css/{$css_url}.css";
 }
@@ -731,15 +745,14 @@ function wppay_js_url($js_url){
 	return WPAY_URL . "/static/js/{$js_url}.js";
 }
 
-function wppay_init_p()
+function wppay_update_setting()
 {
     $body    = array('site' => get_bloginfo('name'), 'version' => _the_theme_version(), 'domain' => get_bloginfo('url'), 'email' => get_bloginfo('admin_email'), 'user_token' => 'no', 'data' => time());
-    $url     = _the_theme_aurl() . 'wp-content/plugins/rizhuri-auth/api/v1.php';
+    $url     = _the_theme_aurl() . 'wp-content/plugins/rizhuti-auth/api/v1.php';
     $request = new WP_Http;
-    $result  = $request->request($url, array('method' => 'POST', 'body' => $body));
-    //return $result['body'];
+    $result  = $request->request($url, array('method' => 'POST', 'sslverify'=> false, 'body' => $body));
 }
-if (isset($_GET['activated'])) {wppay_init_p();}
+if (isset($_GET['activated'])) {wppay_update_setting();}
 
 function c_admin_pagenavi($total_count, $number_per_page=15){
 

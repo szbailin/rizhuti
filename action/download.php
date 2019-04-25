@@ -5,77 +5,37 @@ require_once dirname(__FILE__) . "/../../../../wp-load.php";
 ob_end_clean();
 ini_set('display_errors', 'Off');
 ini_set('error_reporting', E_ALL);
-$postid = isset($_GET['postid']) ? $_GET['postid'] : false;
-$user_id = is_user_logged_in() ? wp_get_current_user()->ID : 0;
-$type = get_post_meta($postid,'wppay_type',true);
-if (!$postid) {
+$url = isset($_GET['url']) ? $_GET['url'] : false;
+
+if (!$url) {
     wp_die('下载参数信息错误！');exit();
 }
-session_start();
 
-$wppay = new WPAY($postid, $user_id);
+$unlock_down = rizhuti_unlock_url($url, _hui('rzt_down_downkey'));
 
-if(!$wppay->is_paid() && $type != 4){
-   wp_die('非法下载，当前没有下载权限！');exit(); 
-}
-// 下载地址处理rzt_down_downkey url
-$down        = get_post_meta($postid, 'wppay_down', true);
-
-$lock_down   = rizhuti_lock_url($down, _hui('rzt_down_downkey'));
-$unlock_down = rizhuti_unlock_url($lock_down, _hui('rzt_down_downkey'));
-
-$post_auth = get_post_meta($postid, 'wppay_vip_auth', true);
-if (intval($post_auth) == 1) {
-    $is_limit = true;
-} elseif (intval($post_auth) == 2) {
-    $is_limit = true;
-} elseif (intval($post_auth) == 3) {
-    $is_limit = true;
+if (isset($_COOKIE['unlock_down_time'])) {
+    wp_die('您的下载太频繁，请一分钟后再试。切勿重复短时间内下载相同资源，以免被扣除下载次数！');exit();
 } else {
-    $is_limit = false;
+    $endtime = 60; // 发送一个 60秒过期的 cookie
+    setcookie("unlock_down_time", time(), time() + $endtime);
 }
-// 用户已经登录 并且是会员 满足下载次数限制要求
+
+// 用户已经登录 并且是会员 满足下载次数限制要求 下载次数非常严格 切勿重复点击
 if (is_user_logged_in()) {
     $user_id  = get_current_user_id();
     $vip_type = vip_type($user_id);
-    if ($vip_type > 0 && $is_limit) {
+    if ($vip_type > 0) {
         // 满足下载限制
         $this_vip_downum = this_vip_downum($user_id);
         if ($this_vip_downum['is_down']) {
-
-            $then_session = $_SESSION['arr_pid'];
-            if ($then_session) {
-                $arr_postid = explode(',', $_SESSION['arr_pid']);
-                // 如果不存在
-                if (in_array($postid, $arr_postid)) {
-                    $_SESSION['arr_pid'] = $then_session;
-                } else {
-                    update_user_meta($user_id, 'this_vip_downum', $this_vip_downum['today_down_num'] + 1); //更新+1
-                    $_SESSION['arr_pid'] = $then_session . ',' . $postid;
-                }
-
-            } else {
-                $_SESSION['arr_pid'] = $postid;
-                update_user_meta($user_id, 'this_vip_downum', $this_vip_downum['today_down_num'] + 1); //更新+1
-            }
-
-            $info = rizhuti_download_file($unlock_down);
+            update_user_meta($user_id, 'this_vip_downum', $this_vip_downum['today_down_num'] + 1); //更新+1
+            $go = rizhuti_download_file($unlock_down);
             exit();
         } else {
-            $arr_postid = explode(',', $_SESSION['arr_pid']);
-            // 如果不存在
-            if (in_array($postid, $arr_postid)) {
-                $info = rizhuti_download_file($unlock_down);
-                exit();
-            } else {
-                wp_die('今日下载次数已经用完！');exit();
-            }
+            wp_die('今日下载次数已经用完！');exit();
         }
     }
 }
-if (_hui('is_down_rasmd5')) {
-    header("Location:".trim($down));exit();
-}else{
-    $info = rizhuti_download_file($unlock_down);
-}
+
+$go = rizhuti_download_file($unlock_down);
 exit();

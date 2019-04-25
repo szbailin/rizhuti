@@ -38,13 +38,13 @@ CSF::createSection( $prefix, array(
           'attributes' => array(
             'style'    => 'width: 100%;'
           ),
-          'default'      => '日主题,rizhuti.com,rizhuti',
+          'default'      => 'AdFate,https://github.com/AdFate/Rizhuti',
         ),
         array(
           'id'        => 'web_description',
           'type'      => 'textarea',
           'title'     => '网站描述',
-          'default'      => '日主题，让男人欲罢不能的WordPress主题，喜欢你就日一下',
+          'default'      => 'AdFate 专注分析 https://github.com/AdFate',
         ),
 
       ),
@@ -64,7 +64,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'ac_qqhao',
       'type'  => 'text',
       'title' => '在线咨询QQ号码',
-      'default' => '200933220',
+      'default' => '10086',
     ),
     array(
       'id'        => 'post_default_thumb',
@@ -424,7 +424,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'banner_title',
       'type'  => 'text',
       'title' => '搜索大标题',
-      'default' => '日主题RiTheme，搜索从这里开始',
+      'default' => '搜索从这里开始',
     ),
 
     array(
@@ -492,7 +492,7 @@ CSF::createSection( $prefix, array(
           'title'     => '推荐背景',
           'add_title' => '上传',
           'desc'      => '图片建议尺寸统一：'.'300*180',
-          'default'      => array('url' =>'https://rizhuti.com/wp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
+          'default'      => array('url' =>'https://github.com/AdFate/Rizhutiwp-content/uploads/2019/02/d7ee241bdd6b1a6.jpg'),
         ),
       ),
     ),
@@ -605,7 +605,7 @@ CSF::createSection( $prefix, array(
       'id'    => 'about_title',
       'type'  => 'text',
       'title' => '模块标题',
-      'default' => '关于日主题 ABOUT',
+      'default' => '关于ABOUT',
     ),
     array(
       'id'    => 'about_desc',
@@ -1087,13 +1087,13 @@ CSF::createSection( $prefix, array(
       'label'       => '用户付款成功，订单消息将发送到用户邮箱，需要自行在辅助功能设置好（SMTP服务），免登录用户暂无法接收',
       'default'      => false,
     ),
-    array(
-      'id'         => 'is_down_rasmd5',
-      'type'       => 'switcher',
-      'title'      => '下载地址简单加密',
-      'label'       => '简单加密也可防采集跳转，如有地址乱码等，可以开启此功能',
-      'default'      => false,
-    ),
+    // array(
+    //   'id'         => 'is_down_rasmd5',
+    //   'type'       => 'switcher',
+    //   'title'      => '下载地址简单加密',
+    //   'label'       => '简单加密也可防采集跳转，如有地址乱码等，可以开启此功能',
+    //   'default'      => false,
+    // ),
     //
     // Dependency example 1
     array(
@@ -1145,7 +1145,7 @@ CSF::createSection( $prefix, array(
             array(
               'id'    => 'vip_price_31_downum',
               'type'  => 'text',
-              'title' => '下载次数',
+              'title' => '每日下载次数',
               'default' => '5',
             ),
           )
@@ -1879,32 +1879,19 @@ CSF::createSection( $prefix, array(
 //
 // Field: about
 //
-$rizhuti_copyright = '<li>本主题官方正版地址： <a target="_bank" href="https://rizhuti.com/">https://rizhuti.com/</a> </li>';
-$rizhuti_copyright .= '<li>日主题不反对盗版用户使用，喜欢就好，盗版用户不供任何支持。</li>';
-$rizhuti_copyright .= '<li>本类主题属于支付+资源+会员，安全问题比较重要，盗版用户自行斟酌。</li>';
-$rizhuti_copyright .= '<li>作为一款小众且实用的主题，虽然很多地方不足，但是我们有良好的会员群一起督促完善本主题。</li>';
-$rizhuti_copyright .= '<li>本主题干净极致，无需任何插件，无加密，无授权。完美适合WordPress虚拟资源分享下载站或者其他的素材资源站点</li>';
-$rizhuti_copyright .= '<li>如果你觉得确实帮到了您，您可以购买一份正版加入尊贵璀璨至尊无敌VIP 用的安全放心 日的为所欲为。</li>';
-$rizhuti_copyright .= '<li>凡不是和作者QQ200933220购买，不在日主题的会员群用户，全部为盗版！</li>';
-$rizhuti_copyright .= '<li>对作者的支持就是提供更新和发布更好作品的动力！</li>';
-$rizhuti_copyright .= '<a class="button button-primary" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=200933220&amp;site=qq&amp;menu=yes">去支持正版</a>';
 
+$rizhuti_copyright = '<li>GitHub Wordpress Theme Rizhuti： <a target="_bank" href="https://github.com/AdFate/rizhuti"https://github.com/AdFate/rizhuti</a> </li>';
+$rizhuti_copyright .= '<li>欢迎Star Fork 随意分发下载使用，本主题已去除授权,代码无后门.</li>';
+$rizhuti_copyright .= '<a class="button button-primary" target="_blank" href="https://github.com/AdFate/rizhuti">查看最新解密版</a>';
 CSF::createSection( $prefix, array(
   'title'       => '关于授权',
   'icon'        => 'fa fa-handshake-o',
-  'description' => '<i class="fa fa-heart" style=" color: red; "></i> 感谢您使用本主题进行创作，不管您是不是从本主题官方渠道购买的正版，但我们感谢您的支持肯定和宠爱。<i class="fa fa-heart" style=" color: red; "></i>',
+  'description' => '<i class="fa fa-heart" style=" color: red; "></i>本主题由AdFate 友情分发 解密去授权,代码无后门安心使用 | GitHub: https://github.com/AdFate/rizhuti<i class="fa fa-heart" style=" color: red; "></i>',
   'fields'      => array(
-
     array(
       'type'       => 'notice',
       'style'      => 'success',
       'content'    => $rizhuti_copyright,
     ),
-    array(
-      'type'       => 'notice',
-      'style'      => 'warning',
-      'content'    => '关于有个别群、盗版用户、不管是出于何种目的，自己用就用了，用了还在那骂日主题作者沙雕，不加密不授权做公益，加密了自己又跟狗一样到处求破解版，网络喷子无处不在，请自重！<br/>如果觉得辣鸡，就网开一面不要践踏我们，加密授权对用户的使用体验是一种损耗，也不方便用户自己修改二开。就算加密授权又能如何，支持的人自然会支持，不支持的人，随便去找人解密了，孰轻孰重孰能忍，最大的受益者永远是用户！',
-    ),
-
   )
 ) );

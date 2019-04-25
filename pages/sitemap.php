@@ -1,7 +1,7 @@
 <?php 
 /*
 	template name: 网站地图
-	description: template for ylit.cc
+	description: template for https://github.com/AdFate/Rizhuti
 */
 ?>
 
